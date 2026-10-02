@@ -1,1 +1,56 @@
-.
+.name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract improved project if ZIP exists
+        run: |
+          if [ -f "MyBrotherMedicalAndroid-improved.zip" ]; then
+            echo "Extracting MyBrotherMedicalAndroid-improved.zip..."
+            unzip -o MyBrotherMedicalAndroid-improved.zip
+          fi
+          if [ -f "MyBrotherMedicalAndroid.zip" ]; then
+            echo "Extracting MyBrotherMedicalAndroid.zip..."
+            unzip -o MyBrotherMedicalAndroid.zip
+          fi
+          ls -la
+          ls -la MyBrotherMedicalAndroid/ || true
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;35.0.0 platform-tools'
+
+      - name: Make Gradle executable
+        working-directory: MyBrotherMedicalAndroid
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        working-directory: MyBrotherMedicalAndroid
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyBrotherMedical-debug-apk
+          path: MyBrotherMedicalAndroid/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
