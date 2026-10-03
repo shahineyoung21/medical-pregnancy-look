@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f9c9d4" />
+  <title>متابعة الحمل 🌸</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
+</head>
+<body>
+
+  <header class="hero">
+    <h1>🌸 متابعة الحمل</h1>
+    <p class="subtitle">رحلتك الجميلة خطوة بخطوة</p>
+  </header>
+
+  <main class="container">
+
+    <!-- بطاقة الملخص -->
+    <section class="summary-card" aria-label="ملخص الحمل">
+      <div class="summary-item">
+        <span class="summary-value" id="currentWeek">--</span>
+        <span class="summary-label">الأسبوع</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-value" id="currentMonth">--</span>
+        <span class="summary-label">الشهر</span>
+      </div>
+      <div class="summary-item wide">
+        <span class="summary-value small" id="trimester">--</span>
+        <span class="summary-label">المرحلة</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-value" id="daysLeft">--</span>
+        <span class="summary-label">يوم متبقي</span>
+      </div>
+    </section>
+
+    <!-- الفورم -->
+    <section class="card">
+      <h2>📝 بياناتك اليومية</h2>
+      <form id="pregnancyForm" autocomplete="off">
+
+        <label class="field">
+          <span>تاريخ الولادة المتوقع</span>
+          <input type="date" id="dueDate" required />
+        </label>
+
+        <label class="field">
+          <span>الوزن (كجم)</span>
+          <input type="number" id="weight" step="0.1" min="30" max="200" placeholder="مثال: 65.5" />
+        </label>
+
+        <label class="field">
+          <span>ضغط الدم</span>
+          <input type="text" id="bp" placeholder="مثال: 120/80" />
+        </label>
+
+        <label class="field">
+          <span>ملاحظات</span>
+          <textarea id="notes" rows="3" placeholder="أي حاجة تحبي تسجليها..."></textarea>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">💾 حفظ</button>
+          <button type="button" id="resetBtn" class="btn ghost">🗑️ مسح الكل</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <p>⚠️ ده تطبيق متابعة شخصي فقط — مش بديل عن استشارة طبيبك.</p>
+      <p class="love">صُنع بـ ❤️</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
