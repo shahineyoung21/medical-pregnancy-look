@@ -22,17 +22,12 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      # إذا كانت ملفات الأندرويد داخل مجلد فرعي (مثلاً MyBrotherMedicalAndroid)، 
-      # قم بإزالة علامة # من السطر التالي واكتب اسم المجلد:
-      # working-directory: ./اسم_المجلد
 
     - name: Build with Gradle
       run: ./gradlew assembleDebug
-      # working-directory: ./اسم_المجلد
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
-        # path: ./اسم_المجلد/app/build/outputs/apk/debug/app-debug.apk
