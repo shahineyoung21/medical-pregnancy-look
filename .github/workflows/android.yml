@@ -1,4 +1,4 @@
-name: Build Flutter APK
+name: Build Android APK
 
 on:
   push:
@@ -11,33 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set up Java JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+    - name: Set up Java JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      # إذا كانت ملفات الأندرويد داخل مجلد فرعي (مثلاً MyBrotherMedicalAndroid)، 
+      # قم بإزالة علامة # من السطر التالي واكتب اسم المجلد:
+      # working-directory: ./اسم_المجلد
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.x'
-          channel: 'stable'
+    - name: Build with Gradle
+      run: ./gradlew assembleDebug
+      # working-directory: ./اسم_المجلد
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build Debug APK
-        run: flutter build apk --debug
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
-          
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
+        # path: ./اسم_المجلد/app/build/outputs/apk/debug/app-debug.apk
